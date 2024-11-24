@@ -5,8 +5,8 @@ import {Observable} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ProveedorServicetService extends EntityDataService<any> {
-    constructor(protected override httpProveedor: HttpProveedor) {
-        super(httpProveedor, END_POINTS.setup.proveedor);
+    constructor(protected override httpClient: HttpClient) {
+        super(httpClient, END_POINTS.setup.proveedor);
     }
 
 
