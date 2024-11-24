@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: ms-envio-service # Nombre de la aplicación, usado por Spring para identificar el microservicio
+  profiles:
+    active: development # Define el perfil activo, en este caso 'development'
+  config:
+    import: optional:configserver:http://root:123456@localhost:7070 # URL del servidor de configuración (config server)

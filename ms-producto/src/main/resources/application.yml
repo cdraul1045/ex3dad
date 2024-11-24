@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: ms-producto-service  # Nombre de la aplicación, utilizado para identificar este microservicio en el entorno distribuido
+
+  profiles:
+    active: development        # Perfil activo de la aplicación, lo que permite tener diferentes configuraciones (development, production, etc.)
+
+  config:
+    import: optional:configserver:http://root:123456@localhost:7070
+    # Configuración del servidor de configuración centralizada (Spring Cloud Config Server).
+    # Se usa para obtener configuraciones desde un servidor remoto.
+    # 'optional' indica que la aplicación puede seguir funcionando aunque el Config Server no esté disponible.
+    # La URL incluye credenciales (root:123456) para autenticarse en el servidor de configuración que está corriendo en localhost:7070.

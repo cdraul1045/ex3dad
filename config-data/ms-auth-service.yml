@@ -1,0 +1,31 @@
+server:
+  port: ${PORT:${SERVERS_PORT:0}}
+  # El puerto del servidor se define dinámicamente. Si `PORT` o `SERVERS_PORT` están configurados como variables de entorno, se usarán.
+  # Si ninguna está presente, el puerto será `0`, lo que hará que Spring Boot asigne un puerto aleatorio.
+
+spring:
+  jpa:
+    hibernate.ddl-auto: update  # Hibernate actualizará automáticamente el esquema de la base de datos basado en las entidades.
+    generate-ddl: true  # Genera el DDL (Data Definition Language) necesario para las entidades de JPA.
+    show-sql: true  # Muestra las sentencias SQL generadas en la consola, útil para depuración.
+
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver  # El driver JDBC para MySQL.
+    url: jdbc:mysql://localhost:3306/ms_auth  # La URL de conexión a la base de datos MySQL, apuntando a la base de datos `ms_auth`.
+    username: root  # Nombre de usuario para la base de datos.
+    password:  # La contraseña está vacía (es recomendable configurarla para mayor seguridad).
+
+eureka:
+  client:
+    serviceUrl:
+      #defaultZone: http://localhost:8090/eureka  # Se comenta para usar la variable de entorno.
+      defaultZone: ${EUREKA_URI:http://localhost:8090/eureka}
+      # URL del servidor Eureka donde este servicio se registrará. Si `EUREKA_URI` está definida, se usará, de lo contrario, se utiliza `localhost:8090/eureka`.
+
+  instance:
+    #hostname: localhost  # La configuración del hostname está comentada.
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    # El `instance-id` se genera dinámicamente, usando el nombre de la aplicación y un valor aleatorio, para identificar la instancia en Eureka.
+
+jwt:
+  secret: secret  # Se define una clave secreta (`secret`) para JWT (JSON Web Token). Esta clave se usará para firmar y validar los tokens JWT.

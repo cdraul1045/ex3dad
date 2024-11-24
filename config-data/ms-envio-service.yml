@@ -1,0 +1,57 @@
+server:
+  # port: 8088  # Se podría especificar un puerto fijo aquí, pero está comentado.
+  port: ${PORT:${SERVER_PORT:0}}
+  # El puerto del servidor se asigna dinámicamente.
+  # Si la variable de entorno `PORT` está definida, se usará; si no, tomará `SERVER_PORT`.
+  # Si ninguna de las dos está definida, el puerto será `0` (lo que significa que Spring Boot asignará un puerto aleatorio).
+
+spring:
+  application:
+    name: ms-envio-service  # Nombre del microservicio, usado en la identificación dentro de Eureka y otros servicios.
+
+  jpa:
+    hibernate:
+      ddl-auto: update  # Hibernate actualizará automáticamente el esquema de la base de datos a partir de las entidades.
+    show-sql: true  # Muestra las sentencias SQL generadas en la consola, útil para depuración.
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/ms_envio  # URL de la base de datos MySQL para el servicio.
+    username: root  # Nombre de usuario para la base de datos.
+    password: ""    # La contraseña para el usuario 'root' está vacía (se debe llenar en un entorno seguro).
+    driver-class-name: com.mysql.cj.jdbc.Driver  # Especifica el driver JDBC para MySQL.
+
+springdoc:
+  api-docs:
+    enabled: true  # Habilita la generación de la documentación OpenAPI (Swagger).
+
+  swagger-ui:
+    enabled: true  # Habilita la interfaz gráfica de Swagger.
+    path: /doc/swagger-ui.html  # Define el path donde estará disponible la interfaz de Swagger UI.
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8090/eureka}
+      # URL del servidor Eureka donde este servicio se registrará.
+      # Si `EUREKA_URI` está definido como variable de entorno, se usará; de lo contrario, se usará `localhost:8090/eureka`.
+
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    # El ID de la instancia se genera dinámicamente, combinando el nombre del microservicio con un valor aleatorio.
+
+resilience4j.circuitbreaker:
+  instances:
+    productListByIdCB:
+      registerHealthIndicator: true
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 3
+      slidingWindowType: TIME_BASED
+      minimumNumberOfCalls: 4
+      waitDurationInOpenState: 5s
+    clientListByIdCB:
+      registerHealthIndicator: true
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 3
+      slidingWindowType: TIME_BASED
+      minimumNumberOfCalls: 4
+      waitDurationInOpenState: 5s

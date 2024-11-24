@@ -1,0 +1,14 @@
+server:
+  port: 8081  # Cambia el puerto según lo necesites
+
+spring:
+  application:
+    name: ms-websocket-service
+
+# Puedes agregar configuraciones de Eureka si deseas registrar este servicio
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8090/eureka}
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

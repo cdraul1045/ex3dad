@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: ms-proveedor-service # Nombre del microservicio
+  profiles:
+    active: development # Perfil activo, en este caso, 'development'
+  config:
+    import: optional:configserver:http://root:123456@localhost:7070 # Configuración para importar desde un servidor de configuración

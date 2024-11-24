@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: ms-cliente-service # Nombre de la aplicación, se usará para identificar este microservicio en el ecosistema
+  profiles:
+    active: development # Perfil activo para la aplicación, se puede cambiar a producción u otros según sea necesario
+  config:
+    import: optional:configserver:http://root:123456@localhost:7070 # Importa la configuración desde un servidor de configuración
