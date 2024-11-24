@@ -7,7 +7,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/jhanrq8888/DAD-2024.git
+          uri: https://github.com/cdraul1045/ex3dad.git
           searchPaths: config-data
           #username:
           #password:
